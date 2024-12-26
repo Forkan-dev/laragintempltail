@@ -1,4 +1,4 @@
-# Go Gin Boilerplate with Laravel-Like Structure, Templ, Tailwind CSS, Preline and Air UI for Scalable Web Applications 
+# Go Gin Boilerplate with Laravel-Like Structure, Templ, Tailwind CSS, Preline UI and Air for Scalable Web Applications 
 
 A boilerplate for building modern backend applications using the **Go Gin framework**, integrated with **TailwindCSS**, **Preline UI components**, and live reloading with **Air** for rapid development.
 
