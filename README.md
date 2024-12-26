@@ -30,7 +30,7 @@ Ensure the following tools are installed on your system:
 
    ```bash
    git clone https://github.com/Forkan-dev/laragintempltail.git
-   cd <your-repo-name>
+   cd laragintempltail
    ```
 
 2. **Set Up TailwindCSS**
