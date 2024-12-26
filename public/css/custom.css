@@ -1,0 +1,81 @@
+/* General styling for input fields */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="checkbox"] {
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border: 1px solid #d1d5db; /* Light gray border */
+  border-radius: 0.5rem;
+  background-color: #f9fafb; /* Light gray background */
+  font-size: 0.875rem; /* Text size for input */
+  color: #374151; /* Dark gray text color */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus state for input fields */
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: #3b82f6; /* Blue border on focus */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); /* Subtle blue glow */
+}
+
+/* Disabled state for input fields */
+input[type="email"]:disabled,
+input[type="password"]:disabled,
+input[type="text"]:disabled {
+  background-color: #e5e7eb; /* Slightly darker gray background */
+  cursor: not-allowed;
+}
+
+/* Styling for checkbox */
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  background-color: #f9fafb;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #3b82f6; /* Blue for checked state */
+  border-color: #3b82f6;
+}
+
+/* Placeholder text */
+input::placeholder {
+  color: #9ca3af; /* Light gray placeholder */
+  opacity: 1;
+}
+
+/* Error styling */
+input[aria-invalid="true"] {
+  border-color: #ef4444; /* Red border for error state */
+  background-color: #fef2f2; /* Light red background */
+}
+
+input[aria-invalid="true"] + .error-message {
+  display: block;
+  color: #ef4444; /* Red text for error messages */
+}
+
+/* Button styling */
+button[type="submit"] {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #3b82f6; /* Primary blue color */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #2563eb; /* Darker blue on hover */
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2); /* Subtle shadow */
+}
