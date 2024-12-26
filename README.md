@@ -80,10 +80,10 @@ Ensure the following tools are installed on your system:
 │   ├── tailwind.config.js  # TailwindCSS configuration file
 │   ├── package.json        # NPM configuration file
 │   └── ...                 # Other assets
-├── templates/            # HTML templates for the application
-├── static/               # Static files (CSS, JS, images)
-├── routes/               # Gin route definitions
-├── controllers/          # Handlers for routes
+├── views/            # HTML templ templates for the application
+├── public/               # Static files (CSS, JS, images)
+├── routes/               # Gin route definitions web
+├── app/          # Handlers for routes, middleware etc
 └── .air.toml             # Air configuration for live reloading
 ```
 
