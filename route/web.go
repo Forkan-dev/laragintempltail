@@ -3,7 +3,6 @@ package route
 import (
 	"net/http"
 	"project1/app/http/controller"
-	"project1/views/pages/auth"
 	"project1/views/pages/user"
 
 	"github.com/gin-gonic/gin"
@@ -12,10 +11,6 @@ import (
 func SetWebRoutes(router *gin.Engine) {
 	web := router.Group("/")
 	{
-		web.Use(middleware.Auth(
-
-
-		))
 		web.GET("/dashboard", controller.UserIndex)
 
 		web.GET("/user", func(c *gin.Context) {
