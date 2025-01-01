@@ -1,9 +1,7 @@
 package route
 
 import (
-	"net/http"
 	"project1/app/http/controller"
-	"project1/views/pages/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,12 +9,9 @@ import (
 func SetWebRoutes(router *gin.Engine) {
 	web := router.Group("/")
 	{
-		web.GET("/dashboard", controller.UserIndex)
+		web.GET("/dashboard", controller.DashboardIndex)
 
-		web.GET("/user", func(c *gin.Context) {
-			// Render the "app.tmpl" template from the "views" folder
-			c.HTML(http.StatusOK, "", user.Index())
-		})
+		web.GET("/user", controller.UserIndex)
 
 		web.GET("/login", controller.Login)
 

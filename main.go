@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"project1/bootstrap"
+	"project1/database"
 
 	"github.com/joho/godotenv"
 )
@@ -15,14 +16,13 @@ func main() {
 		fmt.Println("Error loading .env file")
 	}
 
-	// GET PORT FROM ENV
 	port := os.Getenv("PORT")
-	fmt.Println("PORT: " + port)
 	if port == "" {
 		port = "8080"
 	}
 
 	fmt.Println("Server running on port: " + port)
 
+	database.ConnetDB()
 	bootstrap.Serve(":" + port)
 }
