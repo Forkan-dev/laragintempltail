@@ -1,4 +1,6 @@
 /* General styling for input fields */
+textarea,
+input[type="number"],
 input[type="email"],
 input[type="password"],
 input[type="text"],
@@ -14,6 +16,8 @@ input[type="checkbox"] {
 }
 
 /* Focus state for input fields */
+textarea:focus,
+input[type="number"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus {
@@ -23,6 +27,8 @@ input[type="text"]:focus {
 }
 
 /* Disabled state for input fields */
+textarea:disabled,
+input[type="number"]:disabled,
 input[type="email"]:disabled,
 input[type="password"]:disabled,
 input[type="text"]:disabled {

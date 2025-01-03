@@ -1,13 +1,14 @@
 package controller
 
 import (
+	"fmt"
+	"math/rand"
 	"net/http"
 	"project1/app/dto"
 	helper "project1/app/http"
 	"project1/app/models"
 	"project1/database"
 	userView "project1/views/pages/user"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -33,20 +34,21 @@ func CreateUser(c *gin.Context) {
 }
 
 func StoreUser(c *gin.Context) {
-	// Initialize a variable to hold user data
+
+	// Getting random character
+	pass := generateRandPassword()
 	var user models.User
+	c.Set("password", pass)
+	fmt.Println(c.Get("password"))
+	if err := c.ShouldBind(&user); err != nil {
+		// Check for validation errors
+		// General binding error
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	user.Username = c.PostForm("username")
-	user.Email = c.PostForm("email")
-	user.Address = c.PostForm("address")
-	user.Age, _ = strconv.Atoi(c.PostForm("age"))
+	user.Password = pass
 
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"data": c.PostForm("username"),
-	// })
-	// return
-
-	// Save the user data
 	if err := database.DB.Save(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to save user",
@@ -54,7 +56,21 @@ func StoreUser(c *gin.Context) {
 		return
 	}
 
-	// redirect
+	// redirect back with success message
+
+	c.Redirect(http.StatusFound, "/user")
+}
+
+func DeteleUser(c *gin.Context) {
+	id := c.Param("id")
+	var user models.User
+	if err := database.DB.Delete(&user, id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to delete user",
+		})
+		return
+	}
+
 	c.Redirect(http.StatusFound, "/user")
 }
 
@@ -64,4 +80,14 @@ func makeUserIndexData(user []models.User) dto.Data {
 		Title: "User List",
 		Users: user,
 	}
+}
+
+func generateRandPassword() string {
+	charset := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	var pass string
+	for i := 0; i < 8; i++ {
+		pass += string(charset[rand.Intn(len(charset))])
+	}
+
+	return pass
 }

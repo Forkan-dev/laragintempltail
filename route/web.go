@@ -14,8 +14,9 @@ func SetWebRoutes(router *gin.Engine) {
 		web.GET("/user", controller.UserIndex)
 		web.GET("/user/create", controller.CreateUser)
 		web.GET("/login", controller.Login)
-		
+
 		web.POST("/user/store", controller.StoreUser)
+		web.GET("/user/delete/:id", controller.DeteleUser)
 	}
 	// router.Static("/resources", "./resources")
 	// router.Static("/public", "./public")

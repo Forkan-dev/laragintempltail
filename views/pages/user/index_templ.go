@@ -14,6 +14,10 @@ import (
 	"strconv"
 )
 
+func getDeletUrl(id uint) string {
+	return "/user/delete/" + strconv.FormatUint(uint64(id), 10)
+}
+
 func Index(data dto.Data) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -47,7 +51,7 @@ func Index(data dto.Data) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col\"><div class=\"-m-1.5 overflow-x-auto\"><div class=\"p-1.5 min-w-full inline-block align-middle\"><div class=\"border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700\"><a href=\"user/create\" class=\"mt-5 mr-5 float-right py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none\">Create User</a><div class=\"py-3 px-4\"><div class=\"relative max-w-xs\"><label class=\"sr-only\">Search</label> <input type=\"text\" name=\"hs-table-with-pagination-search\" id=\"hs-table-with-pagination-search\" class=\"py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600\" placeholder=\"Search for Item\"><div class=\"absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3\"></div></div></div><div class=\"overflow-hidden\"><table class=\"min-w-full divide-y divide-gray-200 dark:divide-neutral-700\"><thead class=\"bg-gray-50 dark:bg-neutral-700\"><tr><th scope=\"col\" class=\"py-3 px-4 pe-0\"><div class=\"flex items-center h-5\"><input id=\"hs-table-pagination-checkbox-all\" type=\"checkbox\" class=\"border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800\"> <label for=\"hs-table-pagination-checkbox-all\" class=\"sr-only\">Checkbox</label></div></th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Name</th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Age</th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Address</th><th scope=\"col\" class=\"px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Action</th></tr></thead> <tbody class=\"divide-y divide-gray-200 dark:divide-neutral-700\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col\"><div class=\"-m-1.5 overflow-x-auto\"><div class=\"p-1.5 min-w-full inline-block align-middle\"><div class=\"border rounded-lg divide-y divide-gray-200 dark:border-neutral-700 dark:divide-neutral-700\"><a href=\"user/create\" class=\"mt-5 mr-5 float-right py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none\">Create User</a><div class=\"py-3 px-4\"><div class=\"relative max-w-xs\"><label class=\"sr-only\">Search</label> <input type=\"text\" name=\"hs-table-with-pagination-search\" id=\"hs-table-with-pagination-search\" class=\"py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600\" placeholder=\"Search for Item\"><div class=\"absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3\"></div></div></div><div class=\"overflow-hidden\"><table class=\"min-w-full divide-y divide-gray-200 dark:divide-neutral-700\"><thead class=\"bg-gray-50 dark:bg-neutral-700\"><tr><th scope=\"col\" class=\"py-3 px-4 pe-0\"><div class=\"flex items-center h-5\"><input id=\"hs-table-pagination-checkbox-all\" type=\"checkbox\" class=\"border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-neutral-700 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800\"> <label for=\"hs-table-pagination-checkbox-all\" class=\"sr-only\">Checkbox</label></div></th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Name</th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Email</th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Age</th><th scope=\"col\" class=\"px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Address</th><th scope=\"col\" class=\"px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500\">Action</th></tr></thead> <tbody class=\"divide-y divide-gray-200 dark:divide-neutral-700\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -59,20 +63,20 @@ func Index(data dto.Data) templ.Component {
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Username)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 51, Col: 122}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 55, Col: 122}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var4 string
-				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(user.Age))
+				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Email)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 52, Col: 119}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 56, Col: 119}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -83,15 +87,37 @@ func Index(data dto.Data) templ.Component {
 					return templ_7745c5c3_Err
 				}
 				var templ_7745c5c3_Var5 string
-				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.Address)
+				templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(user.Age))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 53, Col: 109}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 57, Col: 119}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\"><button type=\"button\" class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400\">Delete</button></td></tr>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200\">")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var6 string
+				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(user.Address)
+				if templ_7745c5c3_Err != nil {
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/index.templ`, Line: 58, Col: 109}
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</td><td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\"><a href=\"")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				var templ_7745c5c3_Var7 templ.SafeURL = templ.URL("/user/delete/" + strconv.FormatUint(uint64(user.ID), 10))
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var7)))
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400\">Delete</a></td></tr>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
