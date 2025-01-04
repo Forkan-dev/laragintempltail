@@ -1,0 +1,90 @@
+package user
+
+import "project1/views/layouts"
+import "project1/app/dto"
+import "strconv"
+
+templ EditUser(data dto.EditData) {
+	@layouts.Backend() {
+		<!-- Hire Us -->
+		<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+			<div class="max-w-xl mx-auto">
+				<div class="mt-12">
+					<!-- Form container with responsive grid layout -->
+					<div class="mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+						<h2 class="text-center text-3xl font-semibold mb-8 text-gray-700">Update User</h2>
+						<form action="/user/store" method="POST" class="space-y-4">
+							<!-- Name Fields -->
+							<div>
+								<label for="username" class="block text-xs font-medium text-gray-600">First Name</label>
+								<input
+									type="text"
+									id="username"
+									name="username"
+									value={data.User.Username}
+									class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+									required
+								/>
+							</div>
+							<!-- Work Email -->
+							<div>
+								<label for="work-email" class="block text-xs font-medium text-gray-600">Work Email</label>
+								<input
+									type="email"
+									id="work-email"
+									name="email"
+									value={data.User.Email}
+									class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+									required
+								/>
+							</div>
+							<!-- Age -->
+							<div>
+								<label for="age" class="block text-xs font-medium text-gray-600">Age</label>
+								<input
+									type="number"
+									id="age"
+									name="age"
+									value={strconv.Itoa(data.User.Age)}
+									class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+									required
+								/>
+							</div>
+							<!-- Password -->
+							<div>
+								<label for="password" class="block text-xs font-medium text-gray-600">Password</label>
+								<input
+									type="password"
+									id="password"
+									name="password"
+									placeholder="Enter new password"
+									class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+									required
+								/>
+							</div>
+							<!-- Address -->
+							<div>
+								<label for="address" class="block text-xs font-medium text-gray-600">Address</label>
+								<textarea
+									id="address"
+									name="address"
+									class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+									rows="2"
+									required
+								>{data.User.Address}</textarea>
+							</div>
+							<!-- Submit Button -->
+							<button
+								type="submit"
+								class="w-full py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 focus:ring focus:ring-blue-300"
+							>
+								Update
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Hire Us -->
+	}
+}

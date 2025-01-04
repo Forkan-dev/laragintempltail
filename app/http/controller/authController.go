@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
+	"project1/app/dto"
 	"project1/app/models"
 	"project1/database"
 	"project1/views/pages/auth"
@@ -12,12 +14,27 @@ import (
 )
 
 func Login(c *gin.Context) {
-	// Render the "app.tmpl" template from the "views" folder
-	authUser := sessions.Default(c).Get("user")
-	if authUser != nil {
-		c.Redirect(http.StatusFound, "/dashboard")
+	session := sessions.Default(c)
+	message := session.Flashes("error")
+	session.Save()
+
+	var errorMessage string
+	if len(message) > 0 {
+		errorMessage = message[0].(string) // Type assertion to string
 	}
-	c.HTML(http.StatusOK, "", auth.Login())
+
+	data := dto.ResponseData{
+		ErrorResponse: dto.ErrorResponse{
+			Error: errorMessage,
+		},
+	}
+	fmt.Println("data", message)
+	// admin@gmail.com
+	c.HTML(http.StatusOK, "", auth.Login(data))
+}
+
+func Register(c *gin.Context) {
+	c.HTML(http.StatusOK, "", auth.Register())
 }
 
 func LoginUser(c *gin.Context) {
@@ -37,9 +54,11 @@ func LoginUser(c *gin.Context) {
 
 	// Check if the password is correct
 	if !user.CheckPassword(c.PostForm("password")) {
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"error": "Invalid password",
-		})
+		session := sessions.Default(c)
+		session.AddFlash("Invalid username or password!", "error")
+		session.Save()
+		c.Redirect(http.StatusFound, "/login")
+		return
 	}
 
 	// save in session

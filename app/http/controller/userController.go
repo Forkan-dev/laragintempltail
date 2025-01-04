@@ -63,6 +63,25 @@ func StoreUser(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/user")
 }
 
+func EditUser(c *gin.Context) {
+	id := c.Param("id")
+	var user models.User
+
+	if err := database.DB.First(&user, id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to fetch user",
+		})
+		return
+	}
+
+	data := dto.EditData{
+		Title: "Edit User",
+		User:  user,
+	}
+
+	helper.View(c, userView.EditUser(data))
+}
+
 func DeteleUser(c *gin.Context) {
 	id := c.Param("id")
 	var user models.User

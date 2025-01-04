@@ -6,3 +6,8 @@ type Data struct {
 	Title string
 	Users []models.User
 }
+
+type EditData struct {
+	Title string
+	User  models.User
+}
