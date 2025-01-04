@@ -2,14 +2,15 @@ package controller
 
 import (
 	"fmt"
-	"math/rand"
 	"net/http"
 	"project1/app/dto"
 	helper "project1/app/http"
 	"project1/app/models"
+	"project1/app/service"
 	"project1/database"
 	userView "project1/views/pages/user"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +25,7 @@ func UserIndex(c *gin.Context) {
 		return
 	}
 
-	data := makeUserIndexData(user)
+	data := makeUserIndexData(user, c)
 
 	helper.View(c, userView.Index(data))
 }
@@ -36,7 +37,7 @@ func CreateUser(c *gin.Context) {
 func StoreUser(c *gin.Context) {
 
 	// Getting random character
-	pass := generateRandPassword()
+	pass := service.MakePassword(c.PostForm("password"))
 	var user models.User
 	c.Set("password", pass)
 	fmt.Println(c.Get("password"))
@@ -51,7 +52,8 @@ func StoreUser(c *gin.Context) {
 
 	if err := database.DB.Save(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to save user",
+			"error":   "Failed to save user",
+			"message": err.Error(),
 		})
 		return
 	}
@@ -64,7 +66,8 @@ func StoreUser(c *gin.Context) {
 func DeteleUser(c *gin.Context) {
 	id := c.Param("id")
 	var user models.User
-	if err := database.DB.Delete(&user, id).Error; err != nil {
+
+	if err := database.DB.Unscoped().Delete(&user, id).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to delete user",
 		})
@@ -74,20 +77,30 @@ func DeteleUser(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/user")
 }
 
-func makeUserIndexData(user []models.User) dto.Data {
+func makeUserIndexData(user []models.User, c *gin.Context) dto.Data {
 
+	authUser := getUserFromSession(c)
+	fmt.Println(authUser)
 	return dto.Data{
 		Title: "User List",
 		Users: user,
 	}
 }
 
-func generateRandPassword() string {
-	charset := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	var pass string
-	for i := 0; i < 8; i++ {
-		pass += string(charset[rand.Intn(len(charset))])
-	}
+func getUserFromSession(c *gin.Context) interface{} {
+	session := sessions.Default(c)
+	user := session.Get("user")
 
-	return pass
+	return user
+}
+
+func Logout(c *gin.Context) {
+	session := sessions.Default(c)
+	// specific key
+	session.Delete("user")
+	session.Save()
+
+	// c.Redirect(http.StatusFound, "/login")
+	// i want redirect back
+	c.Redirect(http.StatusFound, c.Request.Referer())
 }

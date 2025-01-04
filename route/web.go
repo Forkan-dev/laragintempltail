@@ -2,6 +2,7 @@ package route
 
 import (
 	"project1/app/http/controller"
+	"project1/app/http/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,18 +10,24 @@ import (
 func SetWebRoutes(router *gin.Engine) {
 	web := router.Group("/")
 	{
-		web.GET("/dashboard", controller.DashboardIndex)
+		// Routes requiring authentication
+		auth := web.Group("/")
+		auth.Use(middleware.Auth)
+		{
+			auth.GET("/dashboard", controller.DashboardIndex)
+			auth.GET("/user", controller.UserIndex)
+			auth.GET("/user/create", controller.CreateUser)
+			auth.POST("/user/store", controller.StoreUser)
+			auth.GET("/user/delete/:id", controller.DeteleUser)
+			auth.GET("/user/logout", controller.Logout)
+		}
 
-		web.GET("/user", controller.UserIndex)
-		web.GET("/user/create", controller.CreateUser)
-		web.GET("/login", controller.Login)
-
-		web.POST("/user/store", controller.StoreUser)
-		web.GET("/user/delete/:id", controller.DeteleUser)
+		// Routes for guests (not logged in)
+		guest := web.Group("/")
+		guest.Use(middleware.Guest)
+		{
+			guest.GET("/login", controller.Login)
+			guest.POST("/login", controller.LoginUser)
+		}
 	}
-	// router.Static("/resources", "./resources")
-	// router.Static("/public", "./public")
-	// ginHtmlRenderer := router.HTMLRender
-	// router.HTMLRender = &gintemplrenderer.HTMLTemplRenderer{FallbackHtmlRenderer: ginHtmlRenderer}
-	// Define a route to serve the templated content
 }

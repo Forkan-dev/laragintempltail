@@ -1,13 +1,21 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
+)
 
 type User struct {
 	gorm.Model
 	ID       uint   `json:"id" gorm:"primaryKey"`
 	Username string `json:"username" form:"username"`
-	Email    string `json:"email" form:"email"`
+	Email    string `json:"email" form:"email" gorm:"unique"`
 	Address  string `json:"address" gorm:"type:text" form:"address"`
 	Age      int    `json:"age" gorm:"type:int" form:"age"`
 	Password string `json:"password" form:"password"`
+}
+
+func (u *User) CheckPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+	return err == nil
 }
