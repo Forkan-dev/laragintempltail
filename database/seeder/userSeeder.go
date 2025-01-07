@@ -12,8 +12,8 @@ import (
 func SeedUser(count int, db *gorm.DB) {
 	userExist := db.First(&models.User{})
 
-	if userExist != nil {
-		fmt.Println("User already exist", userExist)
+	if userExist.Error == nil {
+		fmt.Println("User already exist", userExist.Error != nil, userExist)
 		return
 	}
 	for i := 0; i < count; i++ {

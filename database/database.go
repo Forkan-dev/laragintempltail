@@ -31,5 +31,5 @@ func ConnetDB() {
 
 	// Optionally, you can log successful database connection
 	fmt.Println("Database connected successfully!")
-	seeder.SeedUser(10, DB)
+	seeder.SeedUser(40000, DB)
 }

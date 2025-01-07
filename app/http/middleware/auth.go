@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"net/http"
+	"project1/app/utils"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -12,6 +13,15 @@ func Auth(c *gin.Context) {
 	if authUser == nil {
 		c.Redirect(http.StatusFound, "/login")
 	}
+
+	// slice authUser
+	authUserStruct := utils.AuthUser{
+		Id:    authUser.([]interface{})[0].(uint),
+		Name:  authUser.([]interface{})[1].(string),
+		Email: authUser.([]interface{})[2].(string),
+	}
+
+	c.Set("user", authUserStruct)
 	c.Next()
 }
 
