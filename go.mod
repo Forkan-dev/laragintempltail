@@ -3,10 +3,10 @@ module project1
 go 1.23.4
 
 require (
-	github.com/a-h/templ v0.2.793
+	github.com/a-h/templ v0.3.819
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/gin-contrib/sessions v1.0.2
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.9.1
 	github.com/joho/godotenv v1.5.1
 	golang.org/x/crypto v0.31.0
 	gorm.io/driver/mysql v1.5.7
