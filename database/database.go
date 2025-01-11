@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"project1/app/models"
+	"project1/database/seeder"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -30,4 +31,5 @@ func ConnetDB() {
 
 	// Optionally, you can log successful database connection
 	fmt.Println("Database connected successfully!")
+	seeder.SeedUser(40000, DB)
 }
