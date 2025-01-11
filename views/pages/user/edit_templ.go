@@ -12,6 +12,10 @@ import "project1/views/layouts"
 import "project1/app/dto"
 import "strconv"
 
+func getUpdateUrl(id uint) string {
+	return string(templ.SafeURL("/user/update/" + strconv.FormatUint(uint64(id), 10)))
+}
+
 func EditUser(data dto.EditData) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -45,59 +49,85 @@ func EditUser(data dto.EditData) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!-- Hire Us --> <div class=\"max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto\"><div class=\"max-w-xl mx-auto\"><div class=\"mt-12\"><!-- Form container with responsive grid layout --><div class=\"mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl\"><h2 class=\"text-center text-3xl font-semibold mb-8 text-gray-700\">Update User</h2><form action=\"/user/store\" method=\"POST\" class=\"space-y-4\"><!-- Name Fields --><div><label for=\"username\" class=\"block text-xs font-medium text-gray-600\">First Name</label> <input type=\"text\" id=\"username\" name=\"username\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!-- Hire Us --> <div class=\"max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto\"><div class=\"max-w-xl mx-auto\"><div class=\"mt-12\"><!-- Form container with responsive grid layout --><div class=\"mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl\"><h2 class=\"text-center text-3xl font-semibold mb-8 text-gray-700\">Update User ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
-			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Username)
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(getUpdateUrl(data.User.ID))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 24, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 20, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Work Email --><div><label for=\"work-email\" class=\"block text-xs font-medium text-gray-600\">Work Email</label> <input type=\"email\" id=\"work-email\" name=\"email\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</h2><form hx-post=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var4 string
-			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Email)
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(getUpdateUrl(data.User.ID))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 36, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 22, Col: 45}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Age --><div><label for=\"age\" class=\"block text-xs font-medium text-gray-600\">Age</label> <input type=\"number\" id=\"age\" name=\"age\" value=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" class=\"space-y-4\"><!-- Name Fields --><div><label for=\"username\" class=\"block text-xs font-medium text-gray-600\">First Name</label> <input type=\"text\" id=\"username\" name=\"username\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(data.User.Age))
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Username)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 48, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 27, Col: 81}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Password --><div><label for=\"password\" class=\"block text-xs font-medium text-gray-600\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter new password\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Address --><div><label for=\"address\" class=\"block text-xs font-medium text-gray-600\">Address</label> <textarea id=\"address\" name=\"address\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" rows=\"2\" required>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Work Email --><div><label for=\"work-email\" class=\"block text-xs font-medium text-gray-600\">Work Email</label> <input type=\"email\" id=\"work-email\" name=\"email\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var6 string
-			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Address)
+			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Email)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 74, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 34, Col: 78}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</textarea></div><!-- Submit Button --><button type=\"submit\" class=\"w-full py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 focus:ring focus:ring-blue-300\">Update</button></form></div></div></div></div><!-- End Hire Us -->")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Age --><div><label for=\"age\" class=\"block text-xs font-medium text-gray-600\">Age</label> <input type=\"number\" id=\"age\" name=\"age\" value=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(data.User.Age))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 41, Col: 82}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" required></div><!-- Password --><div><label for=\"password\" class=\"block text-xs font-medium text-gray-600\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter new password\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\"></div><!-- Address --><div><label for=\"address\" class=\"block text-xs font-medium text-gray-600\">Address</label> <textarea id=\"address\" name=\"address\" class=\"mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300\" rows=\"2\" required>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(data.User.Address)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/user/edit.templ`, Line: 56, Col: 44}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</textarea></div><!-- Submit Button --><button type=\"submit\" class=\"w-full py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 focus:ring focus:ring-blue-300\">Update</button></form></div></div></div></div><!-- End Hire Us -->")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

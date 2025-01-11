@@ -60,7 +60,8 @@ func StoreUser(c *gin.Context) {
 
 	// redirect back with success message
 
-	c.Redirect(http.StatusFound, "/user")
+	// c.Redirect(http.StatusFound, "/user")
+	c.Header("HX-Location", "/user")
 }
 
 func EditUser(c *gin.Context) {
@@ -80,6 +81,41 @@ func EditUser(c *gin.Context) {
 	}
 
 	helper.View(c, userView.EditUser(data))
+}
+
+func UpdateUser(c *gin.Context) {
+	email := c.PostForm("email")
+
+	// Retrieve the user from the database using the email
+	var user models.User
+	if err := database.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   "User not found",
+			"message": err.Error(),
+		})
+		return
+	}
+
+	pass := service.MakePassword(c.PostForm("password"))
+	if err := c.ShouldBind(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	user.Password = pass
+
+	fmt.Println(user)
+
+	// Save updated user data to the database
+	if err := database.DB.Save(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   "Failed to save user",
+			"message": err.Error(),
+		})
+		return
+	}
+
+	c.Header("HX-Location", "/user")
 }
 
 func DeteleUser(c *gin.Context) {

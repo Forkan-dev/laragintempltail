@@ -19,6 +19,7 @@ func SetWebRoutes(router *gin.Engine) {
 			auth.GET("/user/create", controller.CreateUser)
 			auth.POST("/user/store", controller.StoreUser)
 			auth.GET("/user/edit/:id", controller.EditUser)
+			auth.POST("/user/update/:id", controller.UpdateUser)
 			auth.GET("/user/delete/:id", controller.DeteleUser)
 			auth.GET("/user/logout", controller.Logout)
 		}

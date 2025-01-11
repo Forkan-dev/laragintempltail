@@ -1324,6 +1324,11 @@ html {
   color: var(--fallback-b1,oklch(var(--b1)/var(--tw-text-opacity, 1)));
 }
 
+.radio,
+.radio-inset {
+  flex-shrink: 0;
+}
+
 .range {
   height: 0.5rem;
   width: 100%;
@@ -1381,6 +1386,48 @@ html {
 
 .select.select-floating.select-lg .select-filled-label {
   margin-inline-start: 1rem;
+}
+
+.swap {
+  position: relative;
+  display: inline-grid;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  place-content: center;
+  cursor: pointer;
+}
+
+.swap > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-property: transform, opacity;
+}
+
+.swap input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.swap .swap-on,
+.swap .swap-indeterminate,
+.swap input:indeterminate ~ .swap-on {
+  opacity: 0;
+}
+
+.swap input:checked ~ .swap-off,
+.swap-active .swap-off,
+.swap input:indeterminate ~ .swap-off {
+  opacity: 0;
+}
+
+.swap input:checked ~ .swap-on,
+.swap-active .swap-on,
+.swap input:indeterminate ~ .swap-indeterminate {
+  opacity: 1;
 }
 
 .switch {
@@ -3307,6 +3354,47 @@ input:focus-visible {
   }
 }
 
+.radio {
+  --basebg: var(--fallback-b1,oklch(var(--b1)/1));
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 9999px;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-n,oklch(var(--n)/var(--tw-border-opacity, 1)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity, 1)));
+}
+
+.radio:focus {
+  box-shadow: none;
+}
+
+.radio:focus-visible {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 0px;
+  outline-color: var(--fallback-n,oklch(var(--n)/0.3));
+}
+
+.radio:checked,
+  .radio[aria-checked="true"] {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-n,oklch(var(--n)/var(--tw-border-opacity, 1)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity, 1)));
+  background-image: none;
+  animation: radiomark var(--animation-input, 0.1s) ease-out;
+  box-shadow: 0 0 0 3px var(--basebg) inset,
+      0 0 0 3px var(--basebg) inset,
+      var(--tw-ring-offset-shadow),
+      var(--tw-ring-shadow);
+}
+
 .radio.disabled,
   .radio:disabled,
   .radio[disabled],
@@ -3487,6 +3575,22 @@ input:focus-visible {
 .validate *:has(.radio:invalid) ~ .label .label-text {
   --tw-text-opacity: 1;
   color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity, 1)));
+}
+
+.validate *:has(> .radio:valid) ~ .success-message,
+.validate *:has(> .radio:valid) > * > .success-message,
+
+.validate .radio:valid ~ .success-message,
+.validate .radio:valid + * > .success-message {
+  display: block;
+}
+
+.validate *:has(> .radio:invalid) ~ .error-message,
+.validate *:has(> .radio:invalid) > * > .error-message,
+
+.validate .radio:invalid ~ .error-message,
+.validate .radio:invalid + * > .error-message {
+  display: block;
 }
 
 .radio-inset.is-valid,
@@ -4783,6 +4887,21 @@ textarea:focus-visible {
 
 .menu-vertical > li:not(.menu-title) > .collapse > ul {
   position: relative;
+}
+
+[type="radio"].radio.radio-xs, [type="radio"].radio-inset.radio-xs {
+  width: 1rem;
+  height: 1rem;
+}
+
+[type="radio"].radio.radio-sm, [type="radio"].radio-inset.radio-sm {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+[type="radio"].radio.radio-lg, [type="radio"].radio-inset.radio-lg {
+  width: 2rem;
+  height: 2rem;
 }
 
 .tabs-lg :where(.tab) {
