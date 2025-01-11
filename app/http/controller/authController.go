@@ -18,7 +18,7 @@ func Login(c *gin.Context) {
 	message := session.Flashes("error")
 	session.Save()
 
-	var errorMessage string
+  	var errorMessage string
 	if len(message) > 0 {
 		errorMessage = message[0].(string) // Type assertion to string
 	}
@@ -29,7 +29,6 @@ func Login(c *gin.Context) {
 		},
 	}
 	fmt.Println("data", message)
-	// admin@gmail.com
 	c.HTML(http.StatusOK, "", auth.Login(data))
 }
 

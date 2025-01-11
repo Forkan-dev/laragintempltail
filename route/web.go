@@ -30,6 +30,7 @@ func SetWebRoutes(router *gin.Engine) {
 			guest.GET("/login", controller.Login)
 			guest.POST("/login", controller.LoginUser)
 			guest.GET("/register", controller.Register)
+			guest.POST("/register", controller.StoreUser)
 		}
 	}
 }
