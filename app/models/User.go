@@ -12,6 +12,7 @@ type User struct {
 	Email    string `json:"email" form:"email" gorm:"unique"`
 	Address  string `json:"address" gorm:"type:text" form:"address"`
 	Age      int    `json:"age" gorm:"type:int" form:"age"`
+	Avater   string `json:"avater" gorm:"type:varchar(255)" form:"avater"`
 	Password string `json:"password" form:"password"`
 }
 
@@ -19,4 +20,3 @@ func (u *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
 }
-    

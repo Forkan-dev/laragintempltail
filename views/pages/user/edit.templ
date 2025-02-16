@@ -5,7 +5,7 @@ import "project1/app/dto"
 import "strconv"
 
 func getUpdateUrl(id uint) string {
-	return string(templ.SafeURL("/user/update/"+strconv.FormatUint(uint64(id), 10)))
+return string(templ.SafeURL("/user/update/"+strconv.FormatUint(uint64(id), 10)))
 }
 
 templ EditUser(data dto.EditData) {
@@ -17,9 +17,8 @@ templ EditUser(data dto.EditData) {
 			<!-- Form container with responsive grid layout -->
 			<div class="mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
 				<h2 class="text-center text-3xl font-semibold mb-8 text-gray-700">Update User
-					{getUpdateUrl(data.User.ID)}
 				</h2>
-				<form hx-post={getUpdateUrl(data.User.ID)} class="space-y-4" >
+				<form hx-post={getUpdateUrl(data.User.ID)} class="space-y-4" hx-encoding="multipart/form-data">
 					// <form method="POST" class="space-y-4">
 						<!-- Name Fields -->
 						<div>
@@ -55,6 +54,13 @@ templ EditUser(data dto.EditData) {
 								class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
 								rows="2" required>{data.User.Address}</textarea>
 						</div>
+						<div>
+							<label for="address" class="block text-xs font-medium text-gray-600">Picture</label>
+							<input type="file" id="picture" name="avater"
+								class="mt-1 block w-full border border-gray-300 rounded px-2 py-1 text-sm focus:ring focus:ring-blue-300"
+								required />
+						</div>
+
 						<!-- Submit Button -->
 						<button type="submit"
 							class="w-full py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 focus:ring focus:ring-blue-300">

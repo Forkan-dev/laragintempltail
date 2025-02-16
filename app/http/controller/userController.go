@@ -3,6 +3,8 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"project1/app/dto"
 	helper "project1/app/http"
 	"project1/app/models"
@@ -85,10 +87,37 @@ func EditUser(c *gin.Context) {
 
 func UpdateUser(c *gin.Context) {
 	email := c.PostForm("email")
+	fileHeader, err := c.FormFile("avater")
+	if err != nil {
+		fmt.Println(fileHeader.Filename)
+		c.JSON(400, gin.H{"error": "No file uploaded"})
+		return
+	}
 
+	// Ensure the directory exists
+	dir := "public/images"
+	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+		fmt.Println(err)
+		c.JSON(500, gin.H{"error": "Failed to create directory"})
+		return
+	}
+
+	// Construct the full path
+	fullPath := filepath.Join(dir, fileHeader.Filename)
+	fmt.Println(fullPath)
+
+	// Save the file
+	if err := c.SaveUploadedFile(fileHeader, fullPath); err != nil {
+		fmt.Println(err)
+		c.JSON(500, gin.H{"error": "Failed to save file"})
+		return
+	}
+
+	// c.JSON(200, gin.H{"message": "File uploaded successfully", "path": fullPath})
 	// Retrieve the user from the database using the email
 	var user models.User
 	if err := database.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error":   "User not found",
 			"message": err.Error(),
@@ -97,17 +126,18 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	pass := service.MakePassword(c.PostForm("password"))
+	c.Set("avater", fullPath)
 	if err := c.ShouldBind(&user); err != nil {
+		fmt.Println(err, "this is error")
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	fmt.Println(user, "this is user")
 	user.Password = pass
-
-	fmt.Println(user)
 
 	// Save updated user data to the database
 	if err := database.DB.Save(&user).Error; err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error":   "Failed to save user",
 			"message": err.Error(),

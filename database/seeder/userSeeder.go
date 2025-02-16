@@ -16,6 +16,7 @@ func SeedUser(count int, db *gorm.DB) {
 		fmt.Println("User already exist", userExist.Error != nil, userExist)
 		return
 	}
+	
 	for i := 0; i < count; i++ {
 		user := models.User{
 			Username: gofakeit.Name(),
