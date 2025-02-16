@@ -11,6 +11,7 @@ import (
 	"project1/app/service"
 	"project1/database"
 	userView "project1/views/pages/user"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -113,7 +114,6 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	// c.JSON(200, gin.H{"message": "File uploaded successfully", "path": fullPath})
 	// Retrieve the user from the database using the email
 	var user models.User
 	if err := database.DB.Where("email = ?", email).First(&user).Error; err != nil {
@@ -126,16 +126,14 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	pass := service.MakePassword(c.PostForm("password"))
-	c.Set("avater", fullPath)
-	if err := c.ShouldBind(&user); err != nil {
-		fmt.Println(err, "this is error")
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	fmt.Println(user, "this is user")
-	user.Password = pass
 
-	// Save updated user data to the database
+	user.Username = c.PostForm("username")
+	user.Email = email
+	user.Password = pass
+	user.Avater = fullPath
+	user.Address = c.PostForm("address")
+	user.Age, _ = strconv.Atoi(c.PostForm("age"))
+
 	if err := database.DB.Save(&user).Error; err != nil {
 		fmt.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -145,12 +143,32 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
+	sessions.Default(c).AddFlash("User updated successfully", "success")
+
 	c.Header("HX-Location", "/user")
 }
 
 func DeteleUser(c *gin.Context) {
 	id := c.Param("id")
 	var user models.User
+
+	if err := database.DB.First(&user, id).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to fetch user",
+		})
+
+		return
+	}
+
+	authUser := getUserFromSession(c).([]interface{})
+	fmt.Println(authUser[2].(string), user.Email)
+	if authUser[2].(string) == user.Email {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"error": "You can't delete yourself",
+		})
+
+		return
+	}
 
 	if err := database.DB.Unscoped().Delete(&user, id).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
